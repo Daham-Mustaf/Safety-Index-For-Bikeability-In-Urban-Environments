@@ -6,3 +6,5 @@ pandas
 missingno
 seaborn
 matplotlib
+keplergl
+shapely

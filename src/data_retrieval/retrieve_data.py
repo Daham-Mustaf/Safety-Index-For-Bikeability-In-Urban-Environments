@@ -76,17 +76,25 @@ def save_as_geojson(df, output_file):
         None
     """
     try:
-        # Convert the DataFrame to a GeoDataFrame
+        # Get the current working directory
+        base_dir = os.getcwd()
+
+        # Specify the directory to save the file
+        save_directory = os.path.join(base_dir, "data", "processed")
+
+        # Create the directory if it doesn't exist
+        os.makedirs(save_directory, exist_ok=True)
+
+        # Convert the Shapely geometries to WKT format
+        df['geometry'] = df['geometry'].apply(lambda x: wkt.dumps(x))
+
+        # Create a GeoDataFrame from the DataFrame
         gdf = gpd.GeoDataFrame(df, geometry='geometry')
 
-        # Convert list values to strings in the GeoDataFrame
-        for col in gdf.columns:
-            if gdf[col].dtype == object and isinstance(gdf[col][0], list):
-                gdf[col] = gdf[col].apply(lambda x: ','.join(x))
+        # Save the GeoDataFrame as a GeoJSON file
+        file_path = os.path.join(save_directory, output_file)
+        gdf.to_file(file_path, driver='GeoJSON')
 
-        # Save the GeoDataFrame as GeoJSON
-        gdf.to_file(output_file, driver='GeoJSON')
-
-        print("GeoJSON saved successfully!")
+        print(f"GeoJSON saved successfully at: {file_path}")
     except Exception as e:
-        print("An error occurred while saving GeoJSON:", e)
+        print("An error occurred while saving the data:", e)

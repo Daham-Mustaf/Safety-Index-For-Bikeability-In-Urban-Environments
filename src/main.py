@@ -1,5 +1,4 @@
 # main.py
-
 from data_processing.process_data import (
 clean_data,compute_default_and_lane_score,
 set_def_maxspeed_and_speed_score,
@@ -12,7 +11,7 @@ score_computation,
 )
 from graph_creation.create_graph import get_place_network, convert_graph_to_gdfs, create_graph, save_graph_geopackage
 from data_retrieval.retrieve_data import save_row_data_as_csv, save_processed_data_as_csv, save_as_geojson
-# from visualization.visualize_data import visualize_data
+from visualization.visualize_data import visualize_data
 
 def main():
     # set up tag settings
@@ -27,14 +26,14 @@ def main():
                        "lanes:width", 'cycleway:left:lane', 'cycleway:both:bicycle',
                        "cycleway:right", 'unclassified', 'from','to']
 
-    place_name = 'Bonn, Germany'
+    bonn = 'Bonn, Germany'
     hamburg = 'Hamburg, Germany'
     koln = 'Köln, Germany'
     pp = 'Poppelsdorf, Bonn, Germany'
     hlw = 'Hoheluft-West, Hamburg, Germany'
     fn= 'Bonn' 
     # Step 1: Retrieve data from place and get a graph.
-    network = get_place_network(hlw, simplify=True, useful_tags_way=useful_tags_way)
+    network = get_place_network(bonn, simplify=True, useful_tags_way=useful_tags_way)
     
     if network is None:
         print("Error: Failed to retrieve network.")
@@ -64,28 +63,18 @@ def main():
     set_bik_no_infra(cleaned_edges)
     set_has_cycle(cleaned_edges)
     score_computation(cleaned_edges)
+    # visualize_data(cleaned_edges)
+
+
     G2 = create_graph(cleaned_edges, nodes)
     save_graph_geopackage(G2, fn)
     
     # save_as_geojson(cleaned_edges, 'output.geojson')
-    
-    # set_scores(cleaned_edges)
-
     save_processed_data_as_csv(cleaned_edges, "scored_edges.csv")
     
-    # cleaned_edges.to_csv('köln_edge.csv') 
+  
     
-    
-    # data = retrieve_data()
 
-    # Step 2: Process data
-    # processed_data = process_data(data)
-
-    # Step 3: Create graph
-    # graph = create_graph(processed_data)
-
-    # Step 4: Visualize data
-    # visualize_data(graph)
 
 if __name__ == '__main__':
     main()
