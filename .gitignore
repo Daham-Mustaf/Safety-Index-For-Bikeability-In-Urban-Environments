@@ -7,7 +7,7 @@ env/
 .vscode/
 .idea/
 *.swp
-
+.DS_Store
 # Ignore package build artifacts
 dist/
 build/
