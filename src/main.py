@@ -12,7 +12,7 @@ score_computation,
 from graph_creation.create_graph import get_place_network, convert_graph_to_gdfs, create_graph, save_graph_geopackage
 from data_retrieval.retrieve_data import save_row_data_as_csv, save_processed_data_as_csv, save_as_geojson
 from visualization.visualize_data import visualize_data
-from geometry_processing.process_geometry import get_node_ids
+from geometry_processing.process_geometry import get_node_ids, compute_coordinates
 
 def main():
     # set up tag settings
@@ -69,10 +69,16 @@ def main():
 
     # Get a list of all node IDs in the graph
     node_ids = get_node_ids(network)
-
     # Print the list of node IDs
-    print(node_ids)
+    # print(node_ids)
+    
+    # Call the function to compute coordinates
+    result = compute_coordinates(network)
 
+    if result is not None:
+        # Print the computed coordinates
+        for lon, lat in result:
+            print(f"Lon: {lon}, Lat: {lat}")
 
     # G2 = create_graph(cleaned_edges, nodes)
     # save_graph_geopackage(G2, fn)

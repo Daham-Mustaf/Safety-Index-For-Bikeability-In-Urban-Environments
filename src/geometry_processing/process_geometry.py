@@ -11,3 +11,15 @@ def get_node_ids(graph):
     except Exception as e:
         print("An error occurred while retrieving node IDs:", e)
         return None
+    
+def compute_coordinates(graph):
+    # Get the list of node IDs
+    node_ids = get_node_ids(graph)
+
+    if node_ids is not None:
+        # Compute coordinates for each node ID using a list comprehension
+        coordinates = [(graph.nodes[node_id]['x'], graph.nodes[node_id]['y']) for node_id in node_ids]
+        return coordinates
+    else:
+        print("Error occurred. Node IDs could not be retrieved.")
+        return None
