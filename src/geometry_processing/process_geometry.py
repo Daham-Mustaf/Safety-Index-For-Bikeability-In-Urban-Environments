@@ -23,3 +23,10 @@ def compute_coordinates(graph):
     else:
         print("Error occurred. Node IDs could not be retrieved.")
         return None
+    
+def print_graph_project(graph):
+    # Project the graph
+    graph_proj = ox.project_graph(graph)
+
+    # Print the projected graph
+    print(graph_proj)

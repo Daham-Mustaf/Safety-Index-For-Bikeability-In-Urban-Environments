@@ -70,7 +70,7 @@ def main():
     # Get a list of all node IDs in the graph
     node_ids = get_node_ids(network)
     # Print the list of node IDs
-    # print(node_ids)
+    print(node_ids)
     
     # Call the function to compute coordinates
     result = compute_coordinates(network)
@@ -80,11 +80,11 @@ def main():
         for lon, lat in result:
             print(f"Lon: {lon}, Lat: {lat}")
 
-    # G2 = create_graph(cleaned_edges, nodes)
-    # save_graph_geopackage(G2, fn)
+    G2 = create_graph(cleaned_edges, nodes)
+    save_graph_geopackage(G2, fn)
     
     # # save_as_geojson(cleaned_edges, 'output.geojson')
-    # save_processed_data_as_csv(cleaned_edges, "scored_edges.csv")
+    save_processed_data_as_csv(cleaned_edges, "scored_edges.csv")
     
   
     
