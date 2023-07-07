@@ -12,6 +12,7 @@ score_computation,
 from graph_creation.create_graph import get_place_network, convert_graph_to_gdfs, create_graph, save_graph_geopackage
 from data_retrieval.retrieve_data import save_row_data_as_csv, save_processed_data_as_csv, save_as_geojson
 from visualization.visualize_data import visualize_data
+from geometry_processing.process_geometry import get_node_ids
 
 def main():
     # set up tag settings
@@ -64,13 +65,20 @@ def main():
     set_has_cycle(cleaned_edges)
     score_computation(cleaned_edges)
     # visualize_data(cleaned_edges)
+   
+
+    # Get a list of all node IDs in the graph
+    node_ids = get_node_ids(network)
+
+    # Print the list of node IDs
+    print(node_ids)
 
 
-    G2 = create_graph(cleaned_edges, nodes)
-    save_graph_geopackage(G2, fn)
+    # G2 = create_graph(cleaned_edges, nodes)
+    # save_graph_geopackage(G2, fn)
     
-    # save_as_geojson(cleaned_edges, 'output.geojson')
-    save_processed_data_as_csv(cleaned_edges, "scored_edges.csv")
+    # # save_as_geojson(cleaned_edges, 'output.geojson')
+    # save_processed_data_as_csv(cleaned_edges, "scored_edges.csv")
     
   
     
